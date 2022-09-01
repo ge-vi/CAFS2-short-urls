@@ -1,3 +1,5 @@
+# Savarankiškas darbas
+
 Sukurkite paprastą nuorodų nukreipimo sistemą. Pvz. http://bit.ly
 
 Vartotojui įvedus norimą adresą, turėtų gauti naują adresą, kurį atidarius būtų daromas nukreipimas į vartotojo norimą nuorodą.
