@@ -2,14 +2,47 @@
 
 require_once __DIR__ . '/resolver.php';
 
-$code = $_GET['code'] ?? false;
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-if ($code) {
-    $link = retrieveLink($code);
+    $code = $_GET['code'] ?? false;
 
-    header("Location: " . $link, true, 301);
+    if ($code) {
+        $link = retrieveLink($code) ?? false;
+
+        if ($link) {
+            header('Location: ' . $link, true, 301);
+            exit();
+        }
+    }
+
+    header('Location: /index.php?err=3', true, 301);
     exit();
-}
 
-header("Location: /index.php", true, 301);
-exit();
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // user input
+    $rawLink = (isset($_POST['link']) && !empty($_POST['link'])) ? trim($_POST['link']) : false;
+
+    // data validation
+    if (!$rawLink) {
+        // no data
+        header('Location: /index.php?err=2', true, 301);
+        exit();
+    } elseif (filter_var($rawLink, FILTER_VALIDATE_URL) === false) {
+        // not valid url
+        header('Location: /index.php?err=2', true, 301);
+        exit();
+    }
+
+    // hooray!!! go with provided data
+    $link = htmlentities($rawLink);
+
+    try {
+        $code = saveLink($link);
+        header('Location: /index.php?code=' . $code, true, 301);
+        exit();
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+        header('Location: /index.php?err=1', true, 301);
+        exit();
+    }
+}
