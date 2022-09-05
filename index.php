@@ -11,7 +11,9 @@ $_SESSION['credits'] = 10;
 require_once __DIR__ . '/resolver.php';
 $links = getAllLinks();
 
-$timeToWait = $_SESSION['time_span'] - (time() - $_SESSION['url_ts'][0]);
+if (isset($_SESSION['url_ts'][0])) {
+    $timeToWait = $_SESSION['time_span'] - (time() - $_SESSION['url_ts'][0]);
+}
 
 $err = $_GET['err'] ?? false;
 
