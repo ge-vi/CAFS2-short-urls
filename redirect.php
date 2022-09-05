@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/resolver.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -25,11 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // data validation
     if (!$rawLink) {
         // no data
-        header('Location: /index.php?err=2', true, 301);
+        header('Location: /index.php?err=2');
         exit();
     } elseif (filter_var($rawLink, FILTER_VALIDATE_URL) === false) {
         // not valid url
-        header('Location: /index.php?err=2', true, 301);
+        header('Location: /index.php?err=2');
+        exit();
+    } elseif (sessionPostsLimiter()) {
+        // out of credits
+        header('Location: /index.php?err=4');
         exit();
     }
 

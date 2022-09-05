@@ -21,6 +21,7 @@ function saveLink(string $link): ?string
     $links[$code] = $link;
 
     if (file_put_contents('links-map.json', json_encode($links))) {
+        sessionPostsIncrement();
         return $code;
     } else {
         return null;
@@ -63,4 +64,19 @@ function getAllLinks(int $limit = 10): array
     );
 
     return array_reverse(array_slice($links, -$limit));
+}
+
+function sessionPostsLimiter(): bool
+{
+    // todo implement
+    if (count($_SESSION['url_ts']) <= $_SESSION['limit']) {
+        return false;
+    } else {
+        return $_SESSION['url_ts'][0] <=> time();
+    }
+}
+
+function sessionPostsIncrement(): void
+{
+    $_SESSION['url_ts'][] = time();
 }

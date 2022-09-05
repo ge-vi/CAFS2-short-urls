@@ -3,14 +3,25 @@ body {
     text-align: center;
 }
 
+h1,
+h2,
+h3 {
+    margin-top: 2em;
+}
+
 .error {
     color: red;
 }
 
 .no-bullets {
     list-style: none;
+    padding: 0;
 }
 
 .no-bullets li {
     margin-bottom: 1em;
+}
+
+footer {
+    margin-top: 2em;
 }
