@@ -78,7 +78,7 @@ function sessionPostsLimiter(): bool
     if (count($_SESSION['url_ts']) < $_SESSION['limit']) {
         return false;
     } else {
-        $_SESSION['url_ts'] = array_slice($_SESSION['url_ts'], -(--$_SESSION['limit']));
+        $_SESSION['url_ts'] = array_slice($_SESSION['url_ts'], -$_SESSION['limit']);
         $diff = $_SESSION['url_ts'][0] <=> time();
         return $diff <= 0;
     }
