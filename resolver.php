@@ -66,13 +66,21 @@ function getAllLinks(int $limit = 10): array
     return array_reverse(array_slice($links, -$limit));
 }
 
+/**
+ * Determines limit reach.
+ * If limit is reached returns `true`.
+ * If limit isn't reached returns `false` so service can continue working.
+ *
+ * @return bool
+ */
 function sessionPostsLimiter(): bool
 {
-    // todo implement
-    if (count($_SESSION['url_ts']) <= $_SESSION['limit']) {
+    if (count($_SESSION['url_ts']) < $_SESSION['limit']) {
         return false;
     } else {
-        return $_SESSION['url_ts'][0] <=> time();
+        $_SESSION['url_ts'] = array_slice($_SESSION['url_ts'], -(--$_SESSION['limit']));
+        $diff = $_SESSION['url_ts'][0] <=> time();
+        return $diff <= 0;
     }
 }
 

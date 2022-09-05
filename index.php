@@ -24,12 +24,11 @@ $err = $_GET['err'] ?? false;
     <meta charset="utf-8">
     <title>Nuorodų nukreipimo sistema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-
-<?php var_dump($_SESSION); ?>
 
 <?php if (isset($err) && $err == 1): ?>
     <p class="error">Duomenų apdorojimo klaida. Prašome pateikti užklausą vėliau.</p>
