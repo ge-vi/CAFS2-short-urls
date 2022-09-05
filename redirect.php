@@ -12,12 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $link = retrieveLink($code) ?? false;
 
         if ($link) {
+            // success
             header('Location: ' . $link, true, 301);
             exit();
         }
     }
 
-    header('Location: /index.php?err=3', true, 301);
+    header('Location: /index.php?err=3', true, 302);
     exit();
 
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {

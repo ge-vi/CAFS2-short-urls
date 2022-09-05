@@ -6,7 +6,6 @@ $_SESSION['url_ts'] = $_SESSION['url_ts'] ?? [];
 
 $_SESSION['limit'] = 10;
 $_SESSION['time_span'] = 60;
-$_SESSION['credits'] = 10;
 
 require_once __DIR__ . '/resolver.php';
 $links = getAllLinks();
@@ -39,7 +38,7 @@ $err = $_GET['err'] ?? false;
 <?php elseif (isset($err) && $err == 3): ?>
     <p class="error">Trumpoji nuoroda nerasta. Sukurkite naują.</p>
 <?php elseif (isset($err) && $err == 4): ?>
-    <p class="error">Išnaudojote limitą: <?= $_SESSION['credits'] ?>. Palaukite: <?= $timeToWait ?> sek.</p>
+    <p class="error">Išnaudojote limitą: <?= $_SESSION['limit'] ?>. Palaukite: <?= $timeToWait ?> sek.</p>
 <?php endif; ?>
 
 
@@ -60,9 +59,9 @@ $err = $_GET['err'] ?? false;
 
     <br>
 
-    <p>Per <?= $_SESSION['time_span'] ?> sekindžių leidžiama sugeneruoti <?= $_SESSION['credits'] ?> trumpųjų
+    <p>Per <?= $_SESSION['time_span'] ?> sekindžių leidžiama sugeneruoti <?= $_SESSION['limit'] ?> trumpųjų
         nuorodų.</p>
-    <p>Jums liko:<kbd> <?= $_SESSION['credits'] - count($_SESSION['url_ts']) ?></kbd></p>
+    <p>Jums liko:<kbd> <?= $_SESSION['limit'] - count($_SESSION['url_ts']) ?></kbd></p>
 
 <?php endif; ?>
 
