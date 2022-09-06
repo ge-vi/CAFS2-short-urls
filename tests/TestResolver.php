@@ -58,8 +58,8 @@ final class TestResolver extends TestCase
             'limit' => 10,
             'time_span' => 60
         ];
-        for ($i = 1000; $i >= 2; $i /= 2) {
-            $_SESSION['url_ts'][] = time() + $i;
+        for ($i = 100; $i >= 0; $i -= 10) {
+            $_SESSION['url_ts'][] = time() - $i;
         }
 
         // exec
