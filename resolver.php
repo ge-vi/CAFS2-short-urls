@@ -15,7 +15,7 @@ function saveLink(string $link): ?string
     );
 
     do {
-        $code = _generateCode();
+        $code = substr(md5(time()), 0, random_int(5, 10));
     } while (array_key_exists($code, $links));
 
     $links[$code] = $link;
@@ -26,14 +26,6 @@ function saveLink(string $link): ?string
     } else {
         return null;
     }
-}
-
-/**
- * @throws Exception
- */
-function _generateCode(): string
-{
-    return substr(md5(time()), 0, random_int(5, 10));
 }
 
 /**
@@ -71,6 +63,9 @@ function getAllLinks(int $limit = 10): array
  * If limit is reached returns `true`.
  * If limit isn't reached returns `false` so service can continue working.
  *
+ * @param array $urlTs
+ * @param int $limit
+ * @param int $timeSpan
  * @return bool
  */
 function sessionPostsLimiter(array &$urlTs, int $limit, int $timeSpan): bool
@@ -89,4 +84,16 @@ function sessionPostsLimiter(array &$urlTs, int $limit, int $timeSpan): bool
 function sessionPostsIncrement(): void
 {
     $_SESSION['url_ts'][] = time();
+}
+
+function sessionErrorSet(int|string $err): void
+{
+    $_SESSION['err'] = $err;
+}
+
+function sessionErrorGet(): int|string
+{
+    $errNum = $_SESSION['err'] ?? 0;
+    unset($_SESSION['err']);
+    return $errNum;
 }

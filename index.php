@@ -1,5 +1,7 @@
 <?php
 
+// ini_set('display_errors', 1);
+
 session_start();
 
 $_SESSION['url_ts'] = $_SESSION['url_ts'] ?? [];
@@ -14,7 +16,7 @@ if (isset($_SESSION['url_ts'][0])) {
     $timeToWait = $_SESSION['time_span'] - (time() - $_SESSION['url_ts'][0]);
 }
 
-$err = $_GET['err'] ?? false;
+$err = sessionErrorGet();
 
 ?>
 
@@ -31,14 +33,10 @@ $err = $_GET['err'] ?? false;
 
 <body>
 
-<?php if (isset($err) && $err == 1): ?>
-    <p class="error">Duomenų apdorojimo klaida. Prašome pateikti užklausą vėliau.</p>
-<?php elseif (isset($err) && $err == 2): ?>
-    <p class="error">Prašome pateikti tinkamą interneto nuorodą.</p>
-<?php elseif (isset($err) && $err == 3): ?>
-    <p class="error">Trumpoji nuoroda nerasta. Sukurkite naują.</p>
-<?php elseif (isset($err) && $err == 4): ?>
+<?php if ($err == 4): ?>
     <p class="error">Išnaudojote limitą: <?= $_SESSION['limit'] ?>. Palaukite: <?= $timeToWait ?> sek.</p>
+<?php elseif ($err): ?>
+    <p class="error"><?= $err; ?></p>
 <?php endif; ?>
 
 
@@ -59,8 +57,8 @@ $err = $_GET['err'] ?? false;
 
     <br>
 
-    <p><small>(Per <?= $_SESSION['time_span'] ?> sekindžių leidžiama sugeneruoti <?= $_SESSION['credits'] ?> trumpųjų
-        nuorodų)</small></p>
+    <p><small>(Per <?= $_SESSION['time_span'] ?> sekindžių leidžiama sugeneruoti <?= $_SESSION['limit'] ?> trumpųjų
+            nuorodų)</small></p>
 
 <?php endif; ?>
 

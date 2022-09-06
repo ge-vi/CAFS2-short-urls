@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     }
 
-    header('Location: /index.php?err=3', true, 302);
+    sessionErrorSet('Trumpoji nuoroda nerasta. Sukurkite naują.');
+    header('Location: /', true, 302);
     exit();
 
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,15 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // data validation
     if (!$rawLink) {
         // no data
-        header('Location: /index.php?err=2');
+        sessionErrorSet('Prašome pateikti tinkamą interneto nuorodą.');
+        header('Location: /');
         exit();
     } elseif (filter_var($rawLink, FILTER_VALIDATE_URL) === false) {
         // not valid url
-        header('Location: /index.php?err=2');
+        sessionErrorSet('Prašome pateikti tinkamą interneto nuorodą.');
+        header('Location: /');
         exit();
     } elseif (sessionPostsLimiter($_SESSION['url_ts'], $_SESSION['limit'], $_SESSION['time_span'])) {
         // out of credits
-        header('Location: /index.php?err=4');
+        sessionErrorSet(4);
+        header('Location: /');
         exit();
     }
 
@@ -49,7 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit();
     } catch (Exception $e) {
         error_log($e->getMessage());
-        header('Location: /index.php?err=1', true, 301);
+        sessionErrorSet('Duomenų apdorojimo klaida. Prašome pateikti užklausą vėliau.');
+        header('Location: /', true, 301);
         exit();
     }
 }
