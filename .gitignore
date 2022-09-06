@@ -1,4 +1,5 @@
 .idea/
 /tests/.phpunit.result.cache
 
-links-map.json
+#git update-index --assume-unchanged links-map.json
+#links-map.json
