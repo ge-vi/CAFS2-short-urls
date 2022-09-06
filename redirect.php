@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // not valid url
         header('Location: /index.php?err=2');
         exit();
-    } elseif (sessionPostsLimiter()) {
+    } elseif (sessionPostsLimiter($_SESSION['url_ts'], $_SESSION['limit'], $_SESSION['time_span'])) {
         // out of credits
         header('Location: /index.php?err=4');
         exit();

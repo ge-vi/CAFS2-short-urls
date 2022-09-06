@@ -73,14 +73,16 @@ function getAllLinks(int $limit = 10): array
  *
  * @return bool
  */
-function sessionPostsLimiter(): bool
+function sessionPostsLimiter(array &$urlTs, int $limit, int $timeSpan): bool
 {
-    if (count($_SESSION['url_ts']) < $_SESSION['limit']) {
+    if (count($urlTs) < $limit) {
         return false;
     } else {
-        $_SESSION['url_ts'] = array_slice($_SESSION['url_ts'], -$_SESSION['limit']);
-        $diff = $_SESSION['url_ts'][0] <=> time();
-        return $diff <= 0;
+        $urlTs = array_slice($urlTs, -(--$limit));
+        $diff = time() - $urlTs[0];
+        // 45 <= 60 -> true: limit
+        // 100 <= 60 -> false: don't limit
+        return $diff <= $timeSpan;
     }
 }
 
