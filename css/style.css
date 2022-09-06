@@ -22,6 +22,10 @@ h3 {
     margin-bottom: 1em;
 }
 
+.no-bullets small {
+    overflow-wrap: anywhere;
+}
+
 footer {
     margin-top: 2em;
 }
