@@ -60,9 +60,8 @@ $err = $_GET['err'] ?? false;
 
     <br>
 
-    <p>Per <?= $_SESSION['time_span'] ?> sekindžių leidžiama sugeneruoti <?= $_SESSION['credits'] ?> trumpųjų
-        nuorodų.</p>
-    <p>Jums liko:<kbd> <?= /*todo fix cal*/ $_SESSION['credits'] - count($_SESSION['url_ts']) ?></kbd></p>
+    <p><small>(Per <?= $_SESSION['time_span'] ?> sekindžių leidžiama sugeneruoti <?= $_SESSION['credits'] ?> trumpųjų
+        nuorodų)</small></p>
 
 <?php endif; ?>
 
