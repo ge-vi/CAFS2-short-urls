@@ -13,6 +13,3 @@ P.S.
 
 Pridėkite limitą: vienam vartotojui galima sukurti daugiausiai 10 nuorodų per minutę. Kaip identifikuoti vartoją -
 spresti Jums
-
-http://cafs2.lt.surikata.serveriai.lt/
-
